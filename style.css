@@ -1,93 +1,250 @@
+:root {
+  --paper: #fdfcf8;
+  --ink: #20201d;
+  --muted: #73716b;
+  --line: #dedcd5;
+}
+
 * {
-    box-sizing: border-box;
-  }
-  
-  html {
-    font-size: 17px;
-  }
-  
-  body {
-    margin: 0;
-    background: #fff;
-    color: #222;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    line-height: 1.7;
-  }
-  
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 17px;
+}
+
+body {
+  margin: 0;
+
+  background: var(--paper);
+  color: var(--ink);
+
+  font-family:
+    "Atkinson Hyperlegible Next",
+    Arial,
+    sans-serif;
+
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* -------------------------
+   PAGE
+------------------------- */
+
+main {
+  width: min(100% - 48px, 760px);
+  margin: 0 auto;
+
+  padding: 92px 0 64px;
+}
+
+
+/* -------------------------
+   HEADER
+------------------------- */
+
+header {
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+  align-items: start;
+
+  margin-bottom: 118px;
+}
+
+h1 {
+  margin: 0;
+
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  font-weight: 600;
+
+  line-height: 1;
+  letter-spacing: -0.028em;
+}
+
+
+/* -------------------------
+   NAV
+------------------------- */
+
+nav {
+  display: flex;
+  gap: 28px;
+
+  padding-top: 10px;
+
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+
+/* -------------------------
+   INTRO
+------------------------- */
+
+.intro {
+  width: 66%;
+  margin-left: 27%;
+
+  margin-bottom: 128px;
+}
+
+.intro p {
+  margin: 0 0 28px;
+}
+
+.intro p:first-child {
+  color: var(--muted);
+
+  font-size: 0.88rem;
+  font-weight: 400;
+
+  line-height: 1.8;
+}
+
+.intro p:not(:first-child) {
+  font-size: 1rem;
+  font-weight: 400;
+
+  line-height: 1.72;
+}
+
+
+/* -------------------------
+   SECTION
+------------------------- */
+
+section {
+  margin-bottom: 112px;
+}
+
+h2 {
+  margin: 0 0 48px;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  letter-spacing: 0.01em;
+}
+
+
+/* -------------------------
+   PAPER
+------------------------- */
+
+article {
+  width: 66%;
+  margin-left: 27%;
+}
+
+h3 {
+  margin: 0 0 10px;
+
+  font-size: 1.12rem;
+  font-weight: 500;
+
+  line-height: 1.5;
+  letter-spacing: -0.008em;
+}
+
+.status {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 0.84rem;
+  font-weight: 400;
+}
+
+
+/* -------------------------
+   LINKS
+------------------------- */
+
+a {
+  color: inherit;
+
+  text-decoration-thickness: 1px;
+  text-decoration-color: #aaa8a1;
+  text-underline-offset: 5px;
+
+  transition:
+    text-decoration-color 120ms ease,
+    color 120ms ease;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+
+/* -------------------------
+   FOOTER
+------------------------- */
+
+footer {
+  width: 66%;
+  margin-left: 27%;
+
+  margin-top: 148px;
+  padding-top: 22px;
+
+  border-top: 1px solid var(--line);
+
+  color: var(--muted);
+
+  font-size: 0.84rem;
+  font-weight: 400;
+}
+
+footer a {
+  color: var(--ink);
+}
+
+
+/* -------------------------
+   MOBILE
+------------------------- */
+
+@media (max-width: 600px) {
+
   main {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 80px 28px;
+    width: min(100% - 36px, 760px);
+    padding-top: 54px;
   }
-  
+
   header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 96px;
+    display: block;
+
+    margin-bottom: 78px;
   }
-  
-  h1 {
-    margin: 0;
-    font-size: 2.2rem;
-    font-weight: 500;
-    letter-spacing: -0.03em;
-  }
-  
+
   nav {
-    display: flex;
-    gap: 24px;
+    margin-top: 22px;
   }
-  
-  a {
-    color: inherit;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
-  }
-  
-  .intro {
-    margin-bottom: 96px;
-  }
-  
-  section {
-    margin-bottom: 96px;
-  }
-  
-  h2 {
-    margin-bottom: 36px;
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-  
-  h3 {
-    margin-bottom: 4px;
-    font-size: 1rem;
-    font-weight: 500;
-  }
-  
-  .status {
-    margin-top: 0;
-    color: #666;
-  }
-  
+
+  .intro,
+  article,
   footer {
-    margin-top: 120px;
-    padding-top: 24px;
-    border-top: 1px solid #ddd;
-    font-size: 0.9rem;
+    width: 88%;
+    margin-left: 12%;
   }
-  
-  @media (max-width: 600px) {
-    main {
-      padding: 48px 22px;
-    }
-  
-    header {
-      display: block;
-      margin-bottom: 72px;
-    }
-  
-    nav {
-      margin-top: 16px;
-    }
+
+  .intro {
+    margin-bottom: 86px;
   }
+
+  section {
+    margin-bottom: 82px;
+  }
+
+  footer {
+    margin-top: 100px;
+  }
+}
