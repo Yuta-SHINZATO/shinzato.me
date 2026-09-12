@@ -1,0 +1,542 @@
+\documentclass[11pt,a4paper]{article}
+
+% =========================================================
+% PAGE
+% =========================================================
+
+\usepackage[
+  top=19mm,
+  bottom=20mm,
+  left=24mm,
+  right=24mm
+]{geometry}
+
+\usepackage{microtype}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+% =========================================================
+% TYPOGRAPHY
+% =========================================================
+
+% EB Garamond throughout.
+% Ordinary numbers are old-style proportional figures.
+\usepackage[
+  oldstyle,
+  proportional
+]{ebgaramond}
+
+% =========================================================
+% COLORS
+% =========================================================
+
+\definecolor{ink}{HTML}{1F1E1B}
+\definecolor{muted}{HTML}{4F4C47}
+\definecolor{rule}{HTML}{77746F}
+
+\color{ink}
+
+% =========================================================
+% DOCUMENT SETTINGS
+% =========================================================
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\pagestyle{plain}
+\urlstyle{same}
+
+\widowpenalty=10000
+\clubpenalty=10000
+
+\hypersetup{
+  pdftitle={Curriculum Vitae — Yuta Shinzato},
+  pdfauthor={Yuta Shinzato}
+}
+
+% =========================================================
+% HEADER
+% =========================================================
+
+\newcommand{\cvname}[1]{%
+  \begin{center}
+    {\fontsize{28}{31}\selectfont
+     \scshape
+     #1}
+  \end{center}
+}
+
+
+% =========================================================
+% SECTION HEADING
+% =========================================================
+
+
+% =========================================================
+% YEARS / CODES
+% =========================================================
+
+% Dates:
+% lining + tabular figures for easy scanning
+
+\newcommand{\cvyear}[1]{%
+  {\color{muted}%
+   \tabularnums{\liningnums{#1}}%
+  }%
+}
+
+% Date ranges
+
+\newcommand{\cvrange}[2]{%
+  {\color{muted}%
+   \tabularnums{%
+     \liningnums{#1}%
+     \textendash
+     \liningnums{#2}%
+   }%
+  }%
+}
+
+% Course numbers and identifiers
+
+\newcommand{\coursecode}[1]{%
+  \liningnums{#1}%
+}
+
+
+\newcommand{\cvsection}[1]{%
+  \vspace{15pt}
+
+  {\fontsize{11.5}{14}\selectfont
+   \bfseries
+   \MakeUppercase{#1}}
+
+  \vspace{2pt}
+
+  {\color{rule}\hrule height 0.45pt}
+
+  \vspace{7pt}
+}
+
+% =========================================================
+% EDUCATION / EXPERIENCE ROW
+% =========================================================
+
+% Requires:
+% \usepackage{tabularx}
+% \usepackage{array}
+%
+% EB Garamond:
+% \usepackage[oldstyle,proportional]{ebgaramond}
+
+
+
+% ---------------------------------------------------------
+% DATED ENTRY
+% ---------------------------------------------------------
+
+% Usage:
+%
+% \datedentry
+%   {Main information}
+%   {Date}
+%   {Secondary line}
+%
+% The date is always aligned with the FIRST line,
+% even when the left-hand entry spans multiple lines.
+\newcommand{\datedentry}[3]{%
+  \noindent
+  \begin{tabularx}{\textwidth}
+  {@{}
+   >{\raggedright\arraybackslash}X
+   >{\raggedleft\arraybackslash}p{35mm}
+   @{}}
+
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}%
+      #1
+    \end{minipage}
+    &
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}%
+      \raggedleft
+      #2
+    \end{minipage}
+
+  \end{tabularx}%
+  \par
+
+  \if\relax\detokenize{#3}\relax
+  \else
+    \vspace{1pt}
+    \hspace{5mm}#3
+    \par
+  \fi
+}
+
+
+% ---------------------------------------------------------
+% SIMPLE DATED ENTRY
+% ---------------------------------------------------------
+
+% Same as datedentry but without a subordinate line.
+
+\newcommand{\simpledated}[2]{%
+  \datedentry
+    {#1}
+    {#2}
+    {}
+}
+
+
+% ---------------------------------------------------------
+% PRESENTATIONS BY YEAR
+% ---------------------------------------------------------
+
+% One year = one visual block.
+%
+% Usage:
+%
+% \presentationyear
+%   {2026}
+%   {Conference A\par
+%    Conference B\par
+%    Conference C}
+
+\newcommand{\presentationyear}[2]{%
+  \noindent
+  \begin{tabularx}{\textwidth}
+  {@{}
+   >{\raggedright\arraybackslash}X
+   >{\raggedleft\arraybackslash}p{35mm}
+   @{}}
+
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}
+      \setlength{\parskip}{2pt}
+      #2
+    \end{minipage}
+    &
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}
+      \raggedleft
+      \cvyear{#1}
+    \end{minipage}
+
+  \end{tabularx}
+}
+
+% =========================================================
+% PAPER LIST
+% =========================================================
+
+\newlist{papers}{enumerate}{1}
+
+\setlist[papers]{
+  label=\arabic*.,
+  leftmargin=10mm,
+  itemsep=5pt,
+  topsep=0pt,
+  parsep=0pt
+}
+% ---------------------------------------------------------
+% RESEARCH ASSISTANT ENTRY
+% ---------------------------------------------------------
+
+\newcommand{\raentry}[3]{%
+  \begin{tabularx}{\textwidth}
+  {@{\hspace{5mm}}
+   >{\raggedright\arraybackslash}X
+   >{\raggedleft\arraybackslash}p{35mm}
+   @{}}
+    #1 & #2
+  \end{tabularx}
+  \vspace{1pt}
+  \hspace{10mm}{\small Supervisor: #3}
+  \par
+}
+
+\newcommand{\appointmentyear}[2]{%
+  \noindent
+  \begin{tabularx}{\textwidth}
+  {@{}
+   >{\raggedright\arraybackslash}X
+   >{\raggedleft\arraybackslash}p{35mm}
+   @{}}
+
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}
+      \setlength{\parskip}{3pt}
+      #2
+    \end{minipage}
+    &
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}
+      \raggedleft
+      \cvyear{#1}
+    \end{minipage}
+
+  \end{tabularx}
+}
+
+
+% ---------------------------------------------------------
+% TEACHING BY YEAR
+% ---------------------------------------------------------
+
+\newcommand{\teachingitem}[2]{%
+  #1\par
+  \hspace{5mm}#2\par
+}
+
+\newcommand{\teachingyear}[2]{%
+  \noindent
+  \begin{tabularx}{\textwidth}
+  {@{}
+   >{\raggedright\arraybackslash}X
+   >{\raggedleft\arraybackslash}p{35mm}
+   @{}}
+
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}
+      #2
+    \end{minipage}
+    &
+    \begin{minipage}[t]{\linewidth}
+      \vspace{0pt}
+      \raggedleft
+      \cvyear{#1}
+    \end{minipage}
+
+  \end{tabularx}
+}
+
+% =========================================================
+% DOCUMENT
+% =========================================================
+
+\begin{document}
+
+% =========================================================
+% NAME
+% =========================================================
+
+\cvname{Yuta Shinzato}
+
+\vspace{8pt}
+
+% =========================================================
+% CONTACT
+% =========================================================
+
+\begin{tabularx}{\textwidth}
+{@{}X >{\raggedleft\arraybackslash}X@{}}
+
+\href{mailto:yuta@shinzato.me}
+     {yuta@shinzato.me}
+&
+Graduate School of Economics
+\\
+
+\href{https://shinzato.me}
+     {https://shinzato.me}
+&
+The University of Tokyo
+\\
+
+&
+Tokyo, Japan
+
+\end{tabularx}
+
+
+% =========================================================
+% EDUCATION
+% =========================================================
+
+\cvsection{Education}
+
+\simpledated
+  {Ph.D. in Economics, The University of Tokyo}
+  {{\cvyear{2026}}--present}
+
+\simpledated
+  {M.A. in Economics, The University of Tokyo}
+  {\cvrange{2023}{2026}}
+
+\begin{tabularx}{\textwidth}
+{@{\hspace{5mm}}X >{\raggedleft\arraybackslash}p{35mm}@{}}
+
+  {Exchange semester, HEC Paris}
+  &
+  {Fall \cvyear{2023}}
+
+\end{tabularx}
+
+% =========================================================
+% RESEARCH FIELDS
+% =========================================================
+
+\cvsection{Research Interest}
+
+Health economics, Macroeconomics, Public Economics
+
+
+% =========================================================
+% WORKING PAPERS
+% =========================================================
+
+\cvsection{Working Papers}
+
+\begin{papers}
+
+  \item
+  ``How Labor Institutions Create Health Inequality:
+  The Case of Cervical Cancer Screening in Japan''
+
+  \item
+  ``Economic Growth and Demographic Challenges:
+  Optimal Policies for Child-Rearing, Education,
+  and Healthcare''
+
+\end{papers}
+
+% =========================================================
+% PRESENTATIONS
+% =========================================================
+
+\cvsection{Presentations}
+
+\presentationyear
+  {2026}
+  {The University of Tokyo, Tokyo\par
+   Japanese Economic Association, Osaka\par
+   Economic Modelling and Data Science (EcoMod), Luxembourg\par
+   Kagawa–Keio Applied Economics Workshop for Young Researchers, Kagawa\par
+   Japanese Health Economics Association, Tokyo\par
+   DSGE Workshop}
+
+\vspace{5pt}
+
+\presentationyear
+  {2025}
+  {The University of Tokyo, Tokyo}
+
+     
+% =========================================================
+% FELLOWSHIPS AND AWARDS
+% =========================================================
+
+\cvsection{Fellowships}
+\simpledated
+  {Japan Society for the Promotion of Science (JSPS),\\
+    \hspace*{5mm}Research Fellowship for Young Scientists
+   (DC\coursecode{1})}
+  {\cvyear{2026}}
+
+
+% =========================================================
+% ACADEMIC APPOINTMENTS
+% =========================================================
+
+\cvsection{Academic Appointments}
+
+
+\textbf{Research Assistant}
+
+\appointmentyear
+  {2026}
+  {
+    Faculty of Economics, Sophia University
+    {\small\textemdash\ Sayaka Nakamura}\par
+
+    Institute of Medicine, University of Tsukuba
+    {\small\textemdash\ Nanako Tamiya}
+  }
+
+\vspace{6pt}
+
+\appointmentyear
+  {2025}
+  {
+    School of Political Science and Economics, Waseda University
+    {\small\textemdash\ Haruko Noguchi}\par
+
+    Institute of Medicine, University of Tsukuba
+    {\small\textemdash\ Nanako Tamiya}\par
+
+    National Institute of Population and Social Security Research
+    {\small\textemdash\ Itaru Sato}
+  }
+
+
+  \textbf{Academic Affairs Assistant}
+
+  \datedentry
+    {Uehiro Divisions for Death and Life Studies and Practical Ethics}
+    {\cvrange{2025}{2026}}
+    {Graduate School of Humanities and Sociology, The University of Tokyo}
+  
+
+  
+  
+% =========================================================
+% TEACHING EXPERIENCE
+% =========================================================
+
+\cvsection{Teaching Experience}
+
+\textbf{Lecturer (part-time)}
+
+\datedentry
+  {Senior Thesis \coursecode{104}}
+  {\cvyear{2026}}
+  {Seikei University \textperiodcentered\ Undergraduate thesis seminar}
+
+\vspace{8pt}
+
+\textbf{Teaching Assistant}
+
+\vspace{3pt}
+
+\teachingyear
+  {2026}
+  {
+    Macroeconomics 1
+    {\small\textemdash\ Makoto Nirei, The University of Tokyo}
+  }
+
+\vspace{6pt}
+
+\teachingyear
+  {2025}
+  {
+    Macroeconomics 1
+    {\small\textemdash\ Makoto Nirei, The University of Tokyo}\par
+
+    Intermediate Macroeconomics
+    {\small\textemdash\ Tomohisa Toyama, International Christian University}\par
+
+    Principles of Macroeconomics
+    {\small\textemdash\ Taisei Kaizoji, International Christian University}
+  }  
+
+% =========================================================
+% ADDITIONAL INFORMATION
+% =========================================================
+
+\cvsection{Additional Information}
+
+Programming:
+Julia, MATLAB, Stata, SQL, R, C
+
+\vspace{3pt}
+
+Languages:
+Japanese (native), English, French (intermediate)
+
+
+\end{document}
