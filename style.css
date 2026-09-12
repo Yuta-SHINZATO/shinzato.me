@@ -1,11 +1,30 @@
 :root {
-  --paper: #fdfcf8;
+  /*
+   * Default presentation
+   *
+   * White is not assumed to be universally optimal.
+   * User/OS color overrides are respected below.
+   */
+  --paper: #ffffff;
   --ink: #20201d;
-  --muted: #73716b;
-  --line: #dedcd5;
+
+  /*
+   * Deliberately darker than the previous muted color.
+   * Small secondary text should remain comfortably readable.
+   */
+  --muted: #55534f;
+
+  --line: #c9c8c3;
 }
 
-* {
+
+/* -------------------------
+   BASE
+------------------------- */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -25,7 +44,11 @@ body {
     sans-serif;
 
   line-height: 1.72;
-  -webkit-font-smoothing: antialiased;
+
+  /*
+   * Do not force font rendering.
+   * Leave rendering decisions to the browser / OS / user.
+   */
 }
 
 
@@ -47,7 +70,6 @@ main {
 
 header {
   display: grid;
-
   grid-template-columns: 1fr auto;
   align-items: start;
 
@@ -60,26 +82,33 @@ h1 {
   font-size: clamp(2.5rem, 6vw, 3.8rem);
   font-weight: 600;
 
-  line-height: 1;
+  line-height: 1.05;
   letter-spacing: -0.028em;
 }
 
 
 /* -------------------------
-   NAV
+   NAVIGATION
 ------------------------- */
 
 nav {
   display: flex;
-  gap: 28px;
+  gap: 20px;
 
-  padding-top: 10px;
+  padding-top: 6px;
 
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
 nav a {
+  /*
+   * Makes the clickable area larger without
+   * visually turning the links into buttons.
+   */
+  display: inline-block;
+  padding: 6px 4px;
+
   text-decoration: none;
 }
 
@@ -102,7 +131,7 @@ nav a {
 .intro p:first-child {
   color: var(--muted);
 
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 400;
 
   line-height: 1.8;
@@ -117,7 +146,7 @@ nav a {
 
 
 /* -------------------------
-   SECTION
+   SECTIONS
 ------------------------- */
 
 section {
@@ -127,15 +156,16 @@ section {
 h2 {
   margin: 0 0 48px;
 
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
 
-  letter-spacing: 0.01em;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
 }
 
 
 /* -------------------------
-   PAPER
+   RESEARCH
 ------------------------- */
 
 article {
@@ -158,8 +188,27 @@ h3 {
 
   color: var(--muted);
 
-  font-size: 0.84rem;
+  font-size: 0.9rem;
   font-weight: 400;
+
+  line-height: 1.6;
+}
+
+
+/* -------------------------
+   TEXT ROBUSTNESS
+------------------------- */
+
+p,
+h1,
+h2,
+h3,
+a {
+  /*
+   * Prevent unusually long text, URLs, or enlarged
+   * text from forcing horizontal scrolling.
+   */
+  overflow-wrap: break-word;
 }
 
 
@@ -171,16 +220,24 @@ a {
   color: inherit;
 
   text-decoration-thickness: 1px;
-  text-decoration-color: #aaa8a1;
+  text-decoration-color: currentColor;
   text-underline-offset: 5px;
-
-  transition:
-    text-decoration-color 120ms ease,
-    color 120ms ease;
 }
 
 a:hover {
-  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+
+
+/*
+ * Keyboard focus is intentionally obvious.
+ *
+ * This only appears for keyboard-style focus in
+ * supporting browsers, so mouse use remains visually quiet.
+ */
+a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 4px;
 }
 
 
@@ -199,8 +256,10 @@ footer {
 
   color: var(--muted);
 
-  font-size: 0.84rem;
+  font-size: 0.9rem;
   font-weight: 400;
+
+  line-height: 1.6;
 }
 
 footer a {
@@ -209,31 +268,74 @@ footer a {
 
 
 /* -------------------------
-   MOBILE
+   SKIP LINK
 ------------------------- */
 
+/*
+ * Hidden during ordinary browsing.
+ * Becomes visible when a keyboard user presses Tab.
+ */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+
+  z-index: 1000;
+
+  padding: 10px 14px;
+
+  background: var(--paper);
+  color: var(--ink);
+
+  border: 2px solid currentColor;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+
+/* -------------------------
+   NARROW VIEWPORT / ZOOM
+------------------------- */
+
+/*
+ * At narrow effective widths, visual offset disappears.
+ *
+ * This also benefits desktop users at high browser zoom:
+ * presentation gives way to readability.
+ */
 @media (max-width: 600px) {
 
   main {
     width: min(100% - 36px, 760px);
-    padding-top: 54px;
+    padding: 54px 0 48px;
   }
 
   header {
     display: block;
 
-    margin-bottom: 78px;
+    margin-bottom: 76px;
   }
 
   nav {
-    margin-top: 22px;
+    margin-top: 18px;
   }
 
+  /*
+   * No offset at narrow widths.
+   * All content becomes a simple single column.
+   */
   .intro,
   article,
   footer {
-    width: 88%;
-    margin-left: 12%;
+    width: 100%;
+    margin-left: 0;
   }
 
   .intro {
@@ -246,5 +348,270 @@ footer a {
 
   footer {
     margin-top: 100px;
+  }
+}
+
+
+/* -------------------------
+   REDUCED MOTION
+------------------------- */
+
+/*
+ * There is almost no motion on this site anyway.
+ * Keep that property explicit.
+ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* -------------------------
+   FORCED COLORS /
+   HIGH CONTRAST
+------------------------- */
+
+/*
+ * Do not fight Windows High Contrast or other
+ * user-selected forced color schemes.
+ */
+@media (forced-colors: active) {
+
+  body {
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  a {
+    color: LinkText;
+  }
+
+  a:focus-visible {
+    outline: 3px solid Highlight;
+  }
+
+  footer {
+    border-color: CanvasText;
+  }
+}
+
+/* =========================================
+   RESEARCH PAGE
+========================================= */
+
+
+/* -------------------------
+   PAGE HEADER
+------------------------- */
+
+.page-header {
+  width: min(100% - 48px, 760px);
+  margin: 0 auto;
+
+  padding-top: 92px;
+  margin-bottom: 118px;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+}
+
+
+/*
+ * Site identity on secondary pages.
+ * Visually related to the homepage title,
+ * but semantically it is a link rather than the page h1.
+ */
+.site-name {
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  font-weight: 600;
+
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+
+  text-decoration: none;
+}
+
+
+/* -------------------------
+   RESEARCH MAIN
+------------------------- */
+
+.research-page {
+  padding-top: 0;
+}
+
+
+/*
+ * Actual h1 of the Research page.
+ */
+.page-title {
+  margin: 0 0 108px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+
+/* -------------------------
+   RESEARCH SECTIONS
+------------------------- */
+
+.research-page section {
+  margin-bottom: 128px;
+}
+
+.research-page h2 {
+  margin: 0 0 52px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+
+/* -------------------------
+   WORKING PAPERS
+------------------------- */
+
+.research-list {
+  width: 66%;
+  margin-left: 27%;
+}
+
+.research-item {
+  width: 100%;
+  margin: 0 0 54px;
+}
+
+.research-item:last-child {
+  margin-bottom: 0;
+}
+
+.research-item h3 {
+  margin: 0;
+
+  font-size: 1.12rem;
+  font-weight: 500;
+
+  line-height: 1.55;
+  letter-spacing: -0.008em;
+}
+
+
+/* -------------------------
+   PRESENTATIONS
+------------------------- */
+
+.presentation-list {
+  width: 66%;
+  margin-left: 27%;
+}
+
+.presentation-list p {
+  margin: 0 0 12px;
+
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.cv-note {
+  width: 66%;
+  margin-left: 27%;
+
+  margin-top: 34px;
+
+  color: var(--muted);
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+
+/* -------------------------
+   RESEARCH FOOTER
+------------------------- */
+
+.research-footer {
+  width: min(calc((100% - 48px) * 0.66), 501px);
+
+  margin-left: calc(
+    (100% - min(100% - 48px, 760px)) / 2
+    + min(100% - 48px, 760px) * 0.27
+  );
+
+  margin-top: 20px;
+  margin-bottom: 64px;
+}
+
+
+/* -------------------------
+   CURRENT PAGE
+------------------------- */
+
+nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+
+/* -------------------------
+   MOBILE / HIGH ZOOM
+------------------------- */
+
+@media (max-width: 600px) {
+
+  .page-header {
+    width: min(100% - 36px, 760px);
+
+    display: block;
+
+    padding-top: 54px;
+    margin-bottom: 76px;
+  }
+
+  .page-header nav {
+    margin-top: 18px;
+  }
+
+  .page-title {
+    margin-bottom: 76px;
+  }
+
+  .research-list,
+  .presentation-list,
+  .cv-note {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .research-page section {
+    margin-bottom: 86px;
+  }
+
+  .research-item {
+    margin-bottom: 42px;
+  }
+
+  .research-footer {
+    width: min(100% - 36px, 760px);
+
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-top: 90px;
+    margin-bottom: 48px;
   }
 }
